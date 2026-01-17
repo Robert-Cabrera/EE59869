@@ -1,0 +1,13 @@
+[Unit]
+Description=Enable Jetson GPIO Pins for Output
+After=network.target
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/usr/bin/python3 /usr/local/bin/enable_gpio_pins.py
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+
