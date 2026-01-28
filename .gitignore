@@ -1,3 +1,10 @@
 #  Ignore models
 models/
 *.onnx
+
+# Ignore VS Code generated files
+.vscode/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
