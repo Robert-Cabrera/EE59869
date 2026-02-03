@@ -33,6 +33,15 @@ Multi-sensor distance measurement system with 3 VL53L1X ToF sensors:
 
 ### GPIO Scripts (`scripts/`)
 
+**File:** `enable_pins.sh/enable_pins.service`
+Sets the pinmux for pins 7, 15, 29, 31, 32, and 33 (General Purpose Pins) as following on startup making use of the busybox api
+7  - OUT
+15 - OUT
+29 - IN
+31 - OUT
+32 - OUT
+33 - OUT
+
 **File:** `reclaim-spi-gpio.dts`
 Device tree overlay that reclaims SPI header pins as GPIO on the Jetson Orin Nano. This overlay disables the SPI1 and SPI3 peripherals by configuring their pads for GPIO input mode with tristate disabled.
 
