@@ -17,8 +17,14 @@ from src.process_env import process_env
 from src.process_indoors import process_indoors
 from src.process_outdoors import process_outdoors
 from src.tof_thread import init_tof, get_distances, cleanup_tof
+from src.camera import init_camera, get_frame, stop_camera, show_frame, stop_monitor
 
 # Global variables
+
+# Debug flags
+DEBUG   = True
+USE_TOF = False  
+MONITOR = False
 
 # Environment processing state
 env_result = None
@@ -70,24 +76,44 @@ if __name__ == "__main__":
     env_model, indoor_model, outdoor_model, crosswalk_model = load_models()
     
     # Init [TOF]
-    init_tof()
-    time.sleep(2)
+    if USE_TOF:
+        init_tof()
+        time.sleep(2)
+
+    # Init [Camera]
+    if not DEBUG:
+        init_camera("/dev/video0", w=640, h=480, fps=30, mjpg=True)
+        time.sleep(1)
     
     frame_idx = 0
 
     try:
         while True:
             # Check sensors
-            distances = get_distances()
-            if (distances['center'] < 0.9 or distances['left'] < 0.9  or distances['right'] < 0.9) and env_init:
-                stop_signal = True
+            if USE_TOF:
+                distances = get_distances()
+                if (distances['center'] < 0.9 or distances['left'] < 0.9  or distances['right'] < 0.9) and env_init:
+                    stop_signal = True
+                else:
+                    stop_signal = False
             else:
                 stop_signal = False
             
             # Normal Operation ==============================================================
             if not stop_signal:
+                
                 # Get frame
-                selFrame = frame(n=frame_idx % 5, indoors=False)
+                if DEBUG:
+                    selFrame = frame(n=frame_idx % 5, indoors=False)
+                else:
+                    selFrame, frame_ts = get_frame(resize=(640, 480), rgb=False)
+                    if selFrame is None:
+                        print(f"[AI] Frame {frame_idx}: No frame captured yet")
+                        time.sleep(0.005)
+                        continue
+
+                if MONITOR:
+                    show_frame(selFrame, window="Video Monitor", delay=1)
 
                 # Process environment
                 env_result = process_env(env_model, selFrame)
@@ -115,4 +141,8 @@ if __name__ == "__main__":
     finally:
         cleanup_tof()
         print("[ToF] Cleaned up resources.")
+        stop_camera()
+        stop_monitor(window="Video Monitor")
+        print("[Camera] Cleaned up resources.")
+        
 

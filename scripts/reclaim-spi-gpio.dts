@@ -1,0 +1,92 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+    jetson-header-name = "Jetson 40pin Header";
+    overlay-name = "Reclaim SPI header pins as GPIO";
+    compatible = "nvidia,p3768-0000+p3767-0000\0nvidia,p3768-0000+p3767-0001\0nvidia,p3768-0000+p3767-0003\0nvidia,p3768-0000+p3767-0004\0nvidia,p3768-0000+p3767-0005\0nvidia,p3768-0000+p3767-0000-super\0nvidia,p3768-0000+p3767-0001-super\0nvidia,p3768-0000+p3767-0003-super\0nvidia,p3768-0000+p3767-0004-super\0nvidia,p3768-0000+p3767-0005-super\0nvidia,p3509-0000+p3767-0000\0nvidia,p3509-0000+p3767-0001\0nvidia,p3509-0000+p3767-0003\0nvidia,p3509-0000+p3767-0004\0nvidia,p3509-0000+p3767-0005";
+
+    fragment@0 {
+        target = <&pinmux>;
+
+        __overlay__ {
+            pinctrl-names = "default";
+            pinctrl-0 = <&jetson_io_pinmux>;
+
+            jetson_io_pinmux: exp-header-pinmux {
+
+                /* --- SPI3 pads repurposed --- */
+                hdr40-pin13 {  /* HDR40 13: spi3_sck_py0 */
+                    nvidia,pins = "spi3_sck_py0";
+                    nvidia,tristate = <0x0>;
+                    nvidia,enable-input = <0x1>;
+                    nvidia,pull = <0x0>;
+                };
+
+                hdr40-pin16 {  /* HDR40 16: spi3_cs1_py4 */
+                    nvidia,pins = "spi3_cs1_py4";
+                    nvidia,tristate = <0x0>;
+                    nvidia,enable-input = <0x1>;
+                    nvidia,pull = <0x0>;
+                };
+
+                hdr40-pin18 {  /* HDR40 18: spi3_cs0_py3 */
+                    nvidia,pins = "spi3_cs0_py3";
+                    nvidia,tristate = <0x0>;
+                    nvidia,enable-input = <0x1>;
+                    nvidia,pull = <0x0>;
+                };
+
+                hdr40-pin22 {  /* HDR40 22: spi3_miso_py1 */
+                    nvidia,pins = "spi3_miso_py1";
+                    nvidia,tristate = <0x0>;
+                    nvidia,enable-input = <0x1>;
+                    nvidia,pull = <0x0>;
+                };
+
+                hdr40-pin37 {  /* HDR40 37: spi3_mosi_py2 */
+                    nvidia,pins = "spi3_mosi_py2";
+                    nvidia,tristate = <0x0>;
+                    nvidia,enable-input = <0x1>;
+                    nvidia,pull = <0x0>;
+                };
+
+                /* --- SPI1 pads repurposed --- */
+                hdr40-pin19 {  /* HDR40 19: spi1_mosi_pz5 */
+                    nvidia,pins = "spi1_mosi_pz5";
+                    nvidia,tristate = <0x0>;
+                    nvidia,enable-input = <0x1>;
+                    nvidia,pull = <0x0>;
+                };
+
+                hdr40-pin21 {  /* HDR40 21: spi1_miso_pz4 */
+                    nvidia,pins = "spi1_miso_pz4";
+                    nvidia,tristate = <0x0>;
+                    nvidia,enable-input = <0x1>;
+                    nvidia,pull = <0x0>;
+                };
+
+                hdr40-pin23 {  /* HDR40 23: spi1_sck_pz3 */
+                    nvidia,pins = "spi1_sck_pz3";
+                    nvidia,tristate = <0x0>;
+                    nvidia,enable-input = <0x1>;
+                    nvidia,pull = <0x0>;
+                };
+
+                hdr40-pin24 {  /* HDR40 24: spi1_cs0_pz6 */
+                    nvidia,pins = "spi1_cs0_pz6";
+                    nvidia,tristate = <0x0>;
+                    nvidia,enable-input = <0x1>;
+                    nvidia,pull = <0x0>;
+                };
+
+                hdr40-pin26 {  /* HDR40 26: spi1_cs1_pz7 */
+                    nvidia,pins = "spi1_cs1_pz7";
+                    nvidia,tristate = <0x0>;
+                    nvidia,enable-input = <0x1>;
+                    nvidia,pull = <0x0>;
+                };
+            };
+        };
+    };
+};

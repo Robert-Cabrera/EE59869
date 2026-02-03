@@ -49,6 +49,10 @@ def process_env(env_model, frame):
         print("[AI][ENV] Model not loaded")
         return "unknown"
     
+    if frame is None:
+        print("[AI][ENV] Error during inference: Received None frame")
+        return "unknown"
+    
     if not _initialize_clip():
         return "unknown"
     

@@ -33,16 +33,36 @@ Multi-sensor distance measurement system with 3 VL53L1X ToF sensors:
 
 ### GPIO Scripts (`scripts/`)
 
-**File:** `enable_gpio_pins.py`
+**File:** `reclaim-spi-gpio.dts`
+Device tree overlay that reclaims SPI header pins as GPIO on the Jetson Orin Nano. This overlay disables the SPI1 and SPI3 peripherals by configuring their pads for GPIO input mode with tristate disabled.
 
-Initializes GPIO pins on Jetson Orin Nano using devmem for direct memory access:
-- Enables pins: 7, 15, 29 (NON-WORKING), 31, 32, 33 as outputs
-- Uses memory-mapped I/O via `busybox devmem`
-- Requires `sudo` privileges
+**Compilation:** Compile using:
+```bash
+dtc -O dtb -o reclaim-spi-gpio.dtbo reclaim-spi-gpio.dts
+```bash
+dtc -O dtb -o reclaim-spi-gpio.dtbo reclaim-spi-gpio.dts
+```
 
-**File:** `enable-gpio.service`
+Copy the compiled `.dtbo` file to the boot directory:
+```bash
+sudo cp reclaim-spi-gpio.dtbo /boot/dtb/overlays/
+```
 
-Systemd service unit for automatic GPIO initialization on boot.
+Then apply it using the Jetson IO configurator:
+```bash
+sudo /opt/nvidia/jetson-io/jetson-io.py
+```
+
+Navigate to the "Configure Jetson 40-pin header" option and select the overlay to enable it.
+
+After reboot, verify the overlay was applied:
+```bash
+cat /boot/extlinux/extlinux.conf
+```
+
+**Reclaimed Pins:**
+- SPI1 header pins (19, 21, 23, 24, 26) and SPI3 header pins (13, 16, 18, 22, 37) are reclaimed as GPIO
+
 
 **File:** `jetson-remote.sh`
 
