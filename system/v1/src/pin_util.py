@@ -22,6 +22,19 @@ def setup_out(pin):
         raise ValueError(f"Pin {pin} is forbidden (power/ground/ID)")
     GPIO.setup(pin, GPIO.OUT, initial=GPIO.LOW)
 
+def setup_in(pin, pull=None):
+    """ Setup pin as input.    """
+    if pin in FORBIDDEN_PINS:
+        raise ValueError(f"Pin {pin} is forbidden")
+    if pull is None:
+        GPIO.setup(pin, GPIO.IN)
+    else:
+        GPIO.setup(pin, GPIO.IN, pull_up_down=pull)
+
+def read(pin):
+    return GPIO.input(pin)
+
+
 def high(pin):
     GPIO.output(pin, GPIO.HIGH)
 
