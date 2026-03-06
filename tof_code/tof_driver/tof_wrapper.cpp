@@ -51,6 +51,7 @@ static PyObject* py_init_tof(PyObject* self, PyObject* args) {
 }
 
 static PyObject* py_get_distances(PyObject* self, PyObject* args) {
+    sleep_ms(1000);
     // Return a dictionary matching your Python code's expectation
     return Py_BuildValue("{s:i, s:i, s:i}", 
         "right",  (int)sensorR->getDistance(),
