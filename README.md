@@ -1,7 +1,6 @@
-# EE59869 - Jetson Orin Nano Bringup
+# EE59869 - Jetson Orin Nano Bringup and Senior Design System 
 
 This repository serves to integrate multiple sensors with a Jetson Orin Nano development board, including camera and Time-of-Flight (ToF) distance sensors.
-
 This will then transition into the creation of an AI pipeline using the camera and the sensors
 
 ## Components
