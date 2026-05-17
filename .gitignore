@@ -2,6 +2,9 @@
 models/
 *.onnx
 
+# Ignore the advanced model development
+advanced_detection_code/
+
 # Oof i have a mac now (rip)
 *.DS_Store
 
