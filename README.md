@@ -3,6 +3,15 @@
 This repository serves to integrate multiple sensors with a Jetson Orin Nano development board, including camera and Time-of-Flight (ToF) distance sensors.
 This will then transition into the creation of an AI pipeline using the camera and the sensors
 
+## Final Remarks
+
+This project has reached the end of development for the first phase: CCNY EE59866 and 59869 -- 2026. The followign advancement should focus 
+on taking the progress achieved locally and transferring it to a cloud-based architecture to solve the issues with size, weight and heat this prototype 
+has brought forward.
+
+The password to the Jetson is saved inside of the device, this password is used for both login and NoMachine. The Jetson has installed avahi-daemon with the
+IP: seniordesign.local
+
 ## Components
 
 ### Camera Module (`camera_code/`)
